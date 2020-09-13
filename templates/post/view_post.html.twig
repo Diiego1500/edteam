@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Posts{% endblock %}
+
+{% block body %}
+    {{ parent() }}
+    <div class="container my-3">
+        {% for message in app.flashes('success') %}
+            <div class="alert alert-success">
+                {{ message }}
+            </div>
+        {% endfor %}
+        <div class="row">
+            <div class="col-md-6">
+                <img src="{{ asset('uploads/post/'~post.imagename) }}" width="100%">
+            </div>
+            <div class="col-md-6">
+                <div class="my-1"><strong>Autor: {{ post.user.email }}</strong></div>
+                <div class="my-1"><strong>Categoría: {{ post.category.name }}</strong></div>
+                <hr>
+                <div>{{ post.postcontent }}</div>
+            </div>
+        </div>
+        <div class="my-3">
+            {{ form(form_comment) }}
+        </div>
+
+        <div>
+            {% for comment in comments %}
+                <div class="my-3 text-justify p-2 border rounded">
+                    <div><strong>Autor: {{ comment.user.email }}</strong></div>
+                    <div><strong>Fecha publicación: {{ comment.creationdate | date }}</strong></div>
+                    {{ comment.comment }}
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}
